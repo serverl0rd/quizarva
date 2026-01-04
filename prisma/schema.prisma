@@ -1,0 +1,164 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  googleId      String         @unique
+  email         String         @unique
+  name          String?
+  username      String?        @unique
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  
+  hostedGames   Game[]         @relation("HostedGames")
+  playerGames   Player[]
+  templates     GameTemplate[]
+  auditLogs     AuditLog[]     @relation("UserAuditLogs")
+}
+
+model Game {
+  id               String       @id @default(cuid())
+  hostId           String
+  host             User         @relation("HostedGames", fields: [hostId], references: [id])
+  password         String
+  status           GameStatus   @default(WAITING)
+  currentBoard     Int          @default(1)
+  currentQuestion  String?
+  currentSelector  String?
+  buzzTimeout      Int?
+  answerTimeout    Int?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  startedAt        DateTime?
+  completedAt      DateTime?
+  winnerId         String?
+  
+  boards           Board[]
+  players          Player[]
+  auditLogs        AuditLog[]
+  buzzQueue        BuzzQueue[]
+  gameSnapshots    GameSnapshot[]
+}
+
+model Board {
+  id          String      @id @default(cuid())
+  gameId      String
+  game        Game        @relation(fields: [gameId], references: [id])
+  boardNumber Int
+  
+  categories  Category[]
+  
+  @@unique([gameId, boardNumber])
+}
+
+model Category {
+  id         String     @id @default(cuid())
+  boardId    String
+  board      Board      @relation(fields: [boardId], references: [id])
+  name       String
+  order      Int
+  
+  questions  Question[]
+  
+  @@unique([boardId, order])
+}
+
+model Question {
+  id              String    @id @default(cuid())
+  categoryId      String
+  category        Category  @relation(fields: [categoryId], references: [id])
+  value           Int
+  questionText    String
+  questionImage   String?
+  correctAnswer   String
+  answerImage     String?
+  explanation     String?
+  isAnswered      Boolean   @default(false)
+  
+  @@unique([categoryId, value])
+}
+
+model Player {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  gameId       String
+  game         Game     @relation(fields: [gameId], references: [id])
+  board1Score  Int      @default(0)
+  board2Score  Int      @default(0)
+  totalScore   Int      @default(0)
+  joinedAt     DateTime @default(now())
+  isActive     Boolean  @default(true)
+  
+  buzzQueueEntries BuzzQueue[]
+  
+  @@unique([userId, gameId])
+}
+
+model BuzzQueue {
+  id         String   @id @default(cuid())
+  gameId     String
+  game       Game     @relation(fields: [gameId], references: [id])
+  playerId   String
+  player     Player   @relation(fields: [playerId], references: [id])
+  questionId String
+  buzzedAt   DateTime @default(now())
+  order      Int
+  isActive   Boolean  @default(false)
+  
+  @@unique([gameId, questionId, playerId])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  gameId      String
+  game        Game     @relation(fields: [gameId], references: [id])
+  userId      String?
+  user        User?    @relation("UserAuditLogs", fields: [userId], references: [id])
+  boardNumber Int?
+  category    String?
+  questionId  String?
+  pointDelta  Int
+  reason      String
+  createdAt   DateTime @default(now())
+}
+
+model GameSnapshot {
+  id              String   @id @default(cuid())
+  gameId          String
+  game            Game     @relation(fields: [gameId], references: [id])
+  questionNumber  Int
+  snapshot        Json
+  createdAt       DateTime @default(now())
+}
+
+model GameTemplate {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  name          String
+  description   String?
+  collection    String?
+  configuration Json
+  isPublic      Boolean  @default(false)
+  creatorName   String?
+  usageCount    Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum GameStatus {
+  WAITING
+  READY
+  IN_PROGRESS
+  PAUSED
+  TIEBREAKER
+  COMPLETED
+  CANCELLED
+}
