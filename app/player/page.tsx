@@ -48,11 +48,11 @@ export default function PlayerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+    <div className="min-h-screen bg-bg-light dark:bg-bg-dark flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-text-primary">Join a Game</h1>
-          <p className="text-text-secondary mt-2">
+          <h1 className="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">Join a Game</h1>
+          <p className="text-text-secondary-light dark:text-text-secondary-dark mt-2">
             Enter the Game ID and password from your host
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function PlayerPage() {
               type="text"
               value={gameId}
               onChange={(e) => setGameId(e.target.value.toUpperCase())}
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-text-primary uppercase font-mono text-lg"
+              className="w-full rounded-md border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark px-3 py-2 text-text-primary-light dark:text-text-primary-dark uppercase font-mono text-lg"
               placeholder="Enter Game ID"
               disabled={joinGameMutation.isPending}
             />
@@ -82,7 +82,7 @@ export default function PlayerPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-text-primary"
+              className="w-full rounded-md border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark px-3 py-2 text-text-primary-light dark:text-text-primary-dark"
               placeholder="Enter password"
               disabled={joinGameMutation.isPending}
             />
@@ -108,7 +108,7 @@ export default function PlayerPage() {
           <Button
             variant="ghost"
             onClick={() => router.push('/')}
-            className="text-text-secondary"
+            className="text-text-secondary-light dark:text-text-secondary-dark"
           >
             ← Back to Home
           </Button>

@@ -88,11 +88,11 @@ export function AuditLogViewer({ gameId }: AuditLogViewerProps) {
             Audit Log
           </h3>
           <div className="flex items-center gap-2">
-            <Filter className="h-4 w-4 text-text-secondary" />
+            <Filter className="h-4 w-4 text-text-secondary-light dark:text-text-secondary-dark" />
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="rounded-md border border-border bg-background px-3 py-1 text-sm"
+              className="rounded-md border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark px-3 py-1 text-sm"
             >
               <option value="all">All Actions</option>
               {uniqueReasons.map((reason) => (
@@ -105,20 +105,20 @@ export function AuditLogViewer({ gameId }: AuditLogViewerProps) {
         </div>
 
         {filteredLogs.length === 0 ? (
-          <div className="text-center py-8 text-text-secondary">
+          <div className="text-center py-8 text-text-secondary-light dark:text-text-secondary-dark">
             <p>No audit logs found</p>
           </div>
         ) : (
           <div className="space-y-2 max-h-96 overflow-y-auto">
             {filteredLogs.map((log: AuditLog) => {
               const Icon = Activity
-              const colorClass = log.pointDelta > 0 ? 'text-green-600' : log.pointDelta < 0 ? 'text-red-600' : 'text-text-primary'
+              const colorClass = log.pointDelta > 0 ? 'text-green-600' : log.pointDelta < 0 ? 'text-red-600' : 'text-text-primary-light dark:text-text-primary-dark'
               const isExpanded = expandedLogs.has(log.id)
 
               return (
                 <div
                   key={log.id}
-                  className="border border-border rounded-lg p-3 hover:bg-surface-alt dark:hover:bg-surface-alt-dark transition-colors"
+                  className="border border-border-light dark:border-border-dark rounded-lg p-3 hover:bg-surface-alt dark:hover:bg-surface-alt-dark transition-colors"
                 >
                   <div className="flex items-start gap-3">
                     <Icon className={`h-4 w-4 mt-0.5 ${colorClass}`} />
@@ -127,13 +127,13 @@ export function AuditLogViewer({ gameId }: AuditLogViewerProps) {
                         <p className="text-sm font-medium">
                           {log.reason}
                         </p>
-                        <div className="flex items-center gap-2 text-xs text-text-secondary">
+                        <div className="flex items-center gap-2 text-xs text-text-secondary-light dark:text-text-secondary-dark">
                           <Clock className="h-3 w-3" />
                           {new Date(log.createdAt).toLocaleTimeString()}
                         </div>
                       </div>
                       
-                      <p className="text-xs text-text-secondary mt-1">
+                      <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1">
                         By {log.createdBy || 'System'}
                       </p>
 

@@ -114,7 +114,7 @@ export default function PlayerGamePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-bg-light dark:bg-bg-dark flex items-center justify-center">
         <p className="text-xl">Loading game...</p>
       </div>
     )
@@ -122,7 +122,7 @@ export default function PlayerGamePage() {
 
   if (!game) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-bg-light dark:bg-bg-dark flex items-center justify-center">
         <div className="text-center">
           <p className="text-xl mb-4">Game not found</p>
           <Button onClick={handleExitGame}>Back to Join</Button>
@@ -146,23 +146,23 @@ export default function PlayerGamePage() {
   const isEligibleForTiebreaker = isInTiebreaker && (gameState?.tiedPlayers || []).includes(currentPlayer?.id)
 
   return (
-    <div className="min-h-screen bg-background portrait:block landscape:hidden">
+    <div className="min-h-screen bg-bg-light dark:bg-bg-dark portrait:block landscape:hidden">
       {/* Force portrait orientation message for landscape */}
       <div className="hidden landscape:flex min-h-screen items-center justify-center p-8">
         <div className="text-center">
           <p className="text-2xl font-bold mb-4">Please rotate your device</p>
-          <p className="text-text-secondary">QuizArva is best played in portrait mode</p>
+          <p className="text-text-secondary-light dark:text-text-secondary-dark">QuizArva is best played in portrait mode</p>
         </div>
       </div>
 
       {/* Main game interface (portrait only) */}
       <div className="portrait:block">
         {/* Header */}
-        <div className="bg-surface border-b border-border p-4">
+        <div className="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark p-4">
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold">QuizArva</h1>
             <div className="text-right">
-              <p className="text-xs text-text-secondary">
+              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
                 {isConnected ? '🟢 Connected' : '🔴 Disconnected'}
               </p>
               <p className="text-sm font-mono">{gameId}</p>
@@ -174,12 +174,12 @@ export default function PlayerGamePage() {
         {game.status === 'WAITING' && (
           <div className="flex flex-col items-center justify-center min-h-[80vh] p-8">
             <h2 className="text-2xl font-bold mb-4">Waiting for game to start...</h2>
-            <p className="text-text-secondary mb-8">
+            <p className="text-text-secondary-light dark:text-text-secondary-dark mb-8">
               Players joined: {game.players.length}/3
             </p>
             <div className="space-y-2 w-full max-w-xs">
               {game.players.map((p: any) => (
-                <div key={p.id} className="bg-surface rounded-lg p-3 border border-border">
+                <div key={p.id} className="bg-surface-light dark:bg-surface-dark rounded-lg p-3 border border-border-light dark:border-border-dark">
                   <p className="font-medium">
                     {p.user?.name || p.username}
                     {p.userId === currentPlayer?.userId && ' (You)'}
@@ -228,7 +228,7 @@ export default function PlayerGamePage() {
                 <div className="flex items-center justify-center min-h-[50vh]">
                   <div className="text-center">
                     <p className="text-xl mb-2">Waiting for question selection...</p>
-                    <p className="text-text-secondary">
+                    <p className="text-text-secondary-light dark:text-text-secondary-dark">
                       {scoreboardPlayers.find((p: any) => p.isCurrentSelector)?.username || 'Host'} is selecting
                     </p>
                   </div>

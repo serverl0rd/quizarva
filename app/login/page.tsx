@@ -5,14 +5,14 @@ import Image from 'next/image'
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="min-h-screen flex items-center justify-center bg-bg-light dark:bg-bg-dark">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-text-primary">QuizArva</h1>
-          <h2 className="mt-6 text-3xl font-extrabold text-text-primary">
+          <h1 className="text-4xl font-bold text-text-primary-light dark:text-text-primary-dark">QuizArva</h1>
+          <h2 className="mt-6 text-3xl font-extrabold text-text-primary-light dark:text-text-primary-dark">
             Sign in to your account
           </h2>
-          <p className="mt-2 text-sm text-text-secondary">
+          <p className="mt-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
             Join exciting multiplayer quiz games
           </p>
         </div>
@@ -20,7 +20,7 @@ export default function LoginPage() {
         <div className="mt-8 space-y-6">
           <button
             onClick={() => signIn('google', { callbackUrl: '/' })}
-            className="group relative w-full flex justify-center items-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            className="group relative w-full flex justify-center items-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-light dark:bg-primary-dark hover:bg-primary-light-hover dark:hover:bg-primary-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark"
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
               <path
@@ -44,7 +44,7 @@ export default function LoginPage() {
           </button>
         </div>
         
-        <div className="text-center text-sm text-text-secondary">
+        <div className="text-center text-sm text-text-secondary-light dark:text-text-secondary-dark">
           By signing in, you agree to play fair and have fun!
         </div>
       </div>

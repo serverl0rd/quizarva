@@ -211,23 +211,23 @@ export function GameDashboard({ gameId, onExit }: GameDashboardProps) {
   }))
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-bg-light dark:bg-bg-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Game Info Header */}
         <div className="mb-6">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold text-text-primary">
+              <h1 className="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">
                 QuizArva Host Dashboard
               </h1>
-              <p className="text-sm text-text-secondary mt-1">
+              <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mt-1">
                 {isConnected ? '🟢 Connected' : '🔴 Disconnected'}
               </p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-text-secondary">Game ID</p>
-              <p className="text-2xl font-mono font-bold text-primary">{gameId}</p>
-              <p className="text-sm text-text-secondary mt-1">Password: {game.password}</p>
+              <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">Game ID</p>
+              <p className="text-2xl font-mono font-bold text-primary-light dark:text-primary-dark">{gameId}</p>
+              <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mt-1">Password: {game.password}</p>
             </div>
           </div>
         </div>
@@ -243,19 +243,19 @@ export function GameDashboard({ gameId, onExit }: GameDashboardProps) {
                   return (
                     <div
                       key={index}
-                      className={`bg-surface rounded-lg p-6 border-2 ${
-                        player ? 'border-success' : 'border-border border-dashed'
+                      className={`bg-surface-light dark:bg-surface-dark rounded-lg p-6 border-2 ${
+                        player ? 'border-success' : 'border-border-light dark:border-border-dark border-dashed'
                       }`}
                     >
                       {player ? (
                         <>
                           <p className="font-semibold text-lg">{player.user?.name || player.username}</p>
-                          <p className="text-sm text-text-secondary">
+                          <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
                             Status: {player.isActive ? 'Connected' : 'Disconnected'}
                           </p>
                         </>
                       ) : (
-                        <p className="text-text-secondary">Waiting for player...</p>
+                        <p className="text-text-secondary-light dark:text-text-secondary-dark">Waiting for player...</p>
                       )}
                     </div>
                   )
@@ -276,7 +276,7 @@ export function GameDashboard({ gameId, onExit }: GameDashboardProps) {
               )}
               
               {!isGameFull && (
-                <div className="bg-surface border border-border rounded-lg p-4 text-center">
+                <div className="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg p-4 text-center">
                   Waiting for {3 - game.players.length} more player{3 - game.players.length > 1 ? 's' : ''}...
                 </div>
               )}
@@ -295,7 +295,7 @@ export function GameDashboard({ gameId, onExit }: GameDashboardProps) {
             />
 
             {/* Game Content Area */}
-            <div className="bg-surface rounded-lg p-6 border border-border min-h-[400px]">
+            <div className="bg-surface-light dark:bg-surface-dark rounded-lg p-6 border border-border-light dark:border-border-dark min-h-[400px]">
               {gamePhase === 'tiebreaker' && (
                 <TiebreakerQuestionSelect
                   gameId={gameId}
@@ -426,7 +426,7 @@ export function GameDashboard({ gameId, onExit }: GameDashboardProps) {
         {/* Game Completed */}
         {game.status === 'COMPLETED' && (
           <div className="space-y-6">
-            <div className="bg-surface rounded-lg p-8 border border-border text-center">
+            <div className="bg-surface-light dark:bg-surface-dark rounded-lg p-8 border border-border-light dark:border-border-dark text-center">
               <h2 className="text-3xl font-bold mb-4">Game Over!</h2>
               {game.winnerId && (
                 <>

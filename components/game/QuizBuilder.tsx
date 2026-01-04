@@ -222,7 +222,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
   return (
     <div className="space-y-8">
       {/* Import/Export Options */}
-      <div className="bg-surface rounded-lg p-6 border border-border">
+      <div className="bg-surface-light dark:bg-surface-dark rounded-lg p-6 border border-border-light dark:border-border-dark">
         <h2 className="text-xl font-semibold mb-4">Import/Export</h2>
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
@@ -257,13 +257,13 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
             Error: {importError}
           </div>
         )}
-        <p className="text-xs text-text-secondary mt-2">
+        <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-2">
           Import a previously exported game or use the template to get started
         </p>
       </div>
 
       {/* Game Settings */}
-      <div className="bg-surface rounded-lg p-6 border border-border">
+      <div className="bg-surface-light dark:bg-surface-dark rounded-lg p-6 border border-border-light dark:border-border-dark">
         <h2 className="text-xl font-semibold mb-4">Game Settings</h2>
         <div className="grid gap-4 md:grid-cols-3">
           <div>
@@ -274,7 +274,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
               type="text"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-md border border-border bg-background px-3 py-2"
+              className="w-full rounded-md border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark px-3 py-2"
               placeholder="Enter password"
             />
           </div>
@@ -286,7 +286,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
               type="number"
               value={buzzTimeout}
               onChange={(e) => setBuzzTimeout(e.target.value)}
-              className="w-full rounded-md border border-border bg-background px-3 py-2"
+              className="w-full rounded-md border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark px-3 py-2"
               placeholder="Optional"
             />
           </div>
@@ -298,7 +298,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
               type="number"
               value={answerTimeout}
               onChange={(e) => setAnswerTimeout(e.target.value)}
-              className="w-full rounded-md border border-border bg-background px-3 py-2"
+              className="w-full rounded-md border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark px-3 py-2"
               placeholder="Optional"
             />
           </div>
@@ -313,7 +313,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
             {boards[`board${boardNum}`].categories.map((category, catIndex) => (
               <div
                 key={catIndex}
-                className="bg-surface rounded-lg p-4 border border-border"
+                className="bg-surface-light dark:bg-surface-dark rounded-lg p-4 border border-border-light dark:border-border-dark"
               >
                 <input
                   type="text"
@@ -321,13 +321,13 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
                   onChange={(e) =>
                     updateCategory(boardNum, catIndex, e.target.value)
                   }
-                  className="w-full rounded-md border border-border bg-background px-3 py-2 mb-4 font-semibold"
+                  className="w-full rounded-md border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark px-3 py-2 mb-4 font-semibold"
                   placeholder={`Category ${catIndex + 1}`}
                 />
                 <div className="space-y-3">
                   {category.questions.map((question, qIndex) => (
                     <div key={qIndex} className="space-y-2">
-                      <div className="text-sm font-medium text-primary">
+                      <div className="text-sm font-medium text-primary-light dark:text-primary-dark">
                         ${POINT_VALUES[qIndex]}
                       </div>
                       <textarea
@@ -341,7 +341,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
                             e.target.value
                           )
                         }
-                        className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm h-20 resize-none"
+                        className="w-full rounded-md border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark px-3 py-2 text-sm h-20 resize-none"
                         placeholder="Question..."
                       />
                       <input
@@ -356,7 +356,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
                             e.target.value
                           )
                         }
-                        className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                        className="w-full rounded-md border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark px-3 py-2 text-sm"
                         placeholder="Answer..."
                       />
                       
@@ -370,7 +370,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
                             [key]: !prev[key]
                           }))
                         }}
-                        className="flex items-center justify-between w-full text-sm text-text-secondary hover:text-primary-light dark:hover:text-primary-dark transition-colors py-1"
+                        className="flex items-center justify-between w-full text-sm text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark transition-colors py-1"
                       >
                         <span>More options</span>
                         {expandedQuestions[`${boardNum}-${catIndex}-${qIndex}`] ? (
@@ -381,9 +381,9 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
                       </button>
                       
                       {expandedQuestions[`${boardNum}-${catIndex}-${qIndex}`] && (
-                        <div className="space-y-2 pt-2 border-t border-border">
+                        <div className="space-y-2 pt-2 border-t border-border-light dark:border-border-dark">
                           <div>
-                            <label className="text-xs font-medium text-text-secondary">Question Image</label>
+                            <label className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">Question Image</label>
                             <ImageUpload
                               value={question.questionImage || ''}
                               onChange={(url) =>
@@ -401,7 +401,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
                           </div>
                           
                           <div>
-                            <label className="text-xs font-medium text-text-secondary">Answer Image</label>
+                            <label className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">Answer Image</label>
                             <ImageUpload
                               value={question.answerImage || ''}
                               onChange={(url) =>
@@ -419,7 +419,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
                           </div>
                           
                           <div>
-                            <label className="text-xs font-medium text-text-secondary">Explanation (optional)</label>
+                            <label className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">Explanation (optional)</label>
                             <textarea
                               value={question.explanation || ''}
                               onChange={(e) =>
@@ -431,7 +431,7 @@ export function QuizBuilder({ onGameCreated }: QuizBuilderProps) {
                                   e.target.value
                                 )
                               }
-                              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm h-16 resize-none mt-1"
+                              className="w-full rounded-md border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark px-3 py-2 text-sm h-16 resize-none mt-1"
                               placeholder="Additional explanation for the answer..."
                             />
                           </div>
