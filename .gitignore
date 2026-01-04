@@ -77,5 +77,55 @@ temp/
 public/sw.js
 public/workbox-*.js
 
+# Development and documentation files
+CLAUDE.md
+HANDOVER.md
+PROJECT_STRUCTURE.md
+futurespec.md
+tasks.md
+notes.md
+TODO.md
+*.backup
+*.bak
+development-notes/
+docs/internal/
+
+# Test files and results
+TEST_FILES/
+TEST_RESULTS.md
+playwright-report/
+test-results/
+e2e-results/
+*.spec.ts.snap
+
 # OLD_FILES directory (archived code)
-# OLD_FILES/  # Uncomment if you don't want to track archived files
+OLD_FILES/
+
+# Design and mockup files
+*.fig
+*.sketch
+*.xd
+*.psd
+design/
+mockups/
+
+# Local development configs
+.claude/
+.cursor/
+*.local.*
+
+# Deployment and CI/CD
+.github/workflows/
+.gitlab-ci.yml
+.circleci/
+deploy/
+scripts/
+
+# Analytics and monitoring
+analytics/
+monitoring/
+
+# Backup files
+backups/
+*.dump
+*.sql.backup
