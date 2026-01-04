@@ -129,3 +129,4 @@ monitoring/
 backups/
 *.dump
 *.sql.backup
+.env*.local

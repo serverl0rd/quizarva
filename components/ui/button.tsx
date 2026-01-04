@@ -13,10 +13,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
           {
-            'bg-primary text-white hover:bg-primary-hover active:bg-primary-active': variant === 'primary',
-            'bg-surface border-2 border-border text-text-primary hover:border-primary': variant === 'secondary',
-            'hover:bg-surface hover:text-text-primary': variant === 'ghost',
-            'bg-error text-white hover:bg-error/90': variant === 'danger',
+            'bg-primary-light dark:bg-primary-dark text-white hover:bg-primary-light-hover dark:hover:bg-primary-dark-hover active:bg-primary-light-active dark:active:bg-primary-dark-active': variant === 'primary',
+            'bg-surface-light dark:bg-surface-dark border-2 border-border-light dark:border-border-dark text-text-primary-light dark:text-text-primary-dark hover:border-primary-light dark:hover:border-primary-dark': variant === 'secondary',
+            'hover:bg-surface-light dark:hover:bg-surface-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-text-primary-light dark:text-text-primary-dark': variant === 'ghost',
+            'bg-error dark:bg-error-dark text-white hover:bg-error/90 dark:hover:bg-error-dark/90': variant === 'danger',
           },
           {
             'h-9 px-3 text-sm': size === 'sm',
