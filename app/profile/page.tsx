@@ -80,9 +80,55 @@ export default function ProfilePage() {
       } else {
         const error = await response.json()
         console.error('Profile fetch failed:', error)
+        // Create a default profile structure from session data
+        if (session?.user) {
+          const defaultProfile: ProfileData = {
+            id: 'temp-' + Date.now(),
+            email: session.user.email || '',
+            name: session.user.name,
+            username: null,
+            profilePhoto: session.user.image || null,
+            bio: null,
+            createdAt: new Date().toISOString(),
+            _count: {
+              hostedGames: 0,
+              playerGames: 0
+            }
+          }
+          setProfile(defaultProfile)
+          setEditForm({
+            name: defaultProfile.name || '',
+            username: '',
+            bio: '',
+            profilePhoto: defaultProfile.profilePhoto || ''
+          })
+        }
       }
     } catch (error) {
       console.error('Error fetching profile:', error)
+      // Create a default profile structure from session data on error
+      if (session?.user) {
+        const defaultProfile: ProfileData = {
+          id: 'temp-' + Date.now(),
+          email: session.user.email || '',
+          name: session.user.name,
+          username: null,
+          profilePhoto: session.user.image || null,
+          bio: null,
+          createdAt: new Date().toISOString(),
+          _count: {
+            hostedGames: 0,
+            playerGames: 0
+          }
+        }
+        setProfile(defaultProfile)
+        setEditForm({
+          name: defaultProfile.name || '',
+          username: '',
+          bio: '',
+          profilePhoto: defaultProfile.profilePhoto || ''
+        })
+      }
     } finally {
       setLoading(false)
     }
@@ -136,10 +182,10 @@ export default function ProfilePage() {
     )
   }
 
-  if (!profile) {
+  if (!profile && !session) {
     return (
       <div className="flex-1 bg-white dark:bg-black flex items-center justify-center">
-        <div className="text-gray-600 dark:text-gray-400">Profile not found</div>
+        <div className="text-gray-600 dark:text-gray-400">Please sign in to view your profile</div>
       </div>
     )
   }
@@ -169,24 +215,24 @@ export default function ProfilePage() {
                 <ImageUpload
                   value={editForm.profilePhoto}
                   onChange={handleImageUpload}
-                  currentImage={profile.profilePhoto || ''}
+                  currentImage={profile?.profilePhoto || ''}
                   variant="circle"
                   className="w-32 h-32"
                   placeholder="Upload photo"
                 />
               ) : (
                 <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-800">
-                  {profile.profilePhoto ? (
+                  {profile?.profilePhoto ? (
                     <Image
                       src={profile.profilePhoto}
-                      alt={profile.name || 'Profile'}
+                      alt={profile?.name || 'Profile'}
                       width={128}
                       height={128}
                       className="w-full h-full object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-4xl text-gray-500">
-                      {profile.name?.charAt(0).toUpperCase() || '?'}
+                      {profile?.name?.charAt(0).toUpperCase() || session?.user?.name?.charAt(0).toUpperCase() || '?'}
                     </div>
                   )}
                 </div>
@@ -232,10 +278,10 @@ export default function ProfilePage() {
                       onClick={() => {
                         setIsEditing(false)
                         setEditForm({
-                          name: profile.name || '',
-                          username: profile.username || '',
-                          bio: profile.bio || '',
-                          profilePhoto: profile.profilePhoto || ''
+                          name: profile?.name || '',
+                          username: profile?.username || '',
+                          bio: profile?.bio || '',
+                          profilePhoto: profile?.profilePhoto || ''
                         })
                       }}
                     >
@@ -247,19 +293,19 @@ export default function ProfilePage() {
                 <>
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h1 className="text-3xl font-bold">{profile.name || 'Unnamed User'}</h1>
-                      {profile.username && (
+                      <h1 className="text-3xl font-bold">{profile?.name || session?.user?.name || 'Unnamed User'}</h1>
+                      {profile?.username && (
                         <p className="text-gray-600 dark:text-gray-400">@{profile.username}</p>
                       )}
-                      <p className="text-sm text-gray-500 mt-1">{profile.email}</p>
+                      <p className="text-sm text-gray-500 mt-1">{profile?.email || session?.user?.email || ''}</p>
                     </div>
                     <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
                   </div>
-                  {profile.bio && (
+                  {profile?.bio && (
                     <p className="text-gray-700 dark:text-gray-300 mb-4">{profile.bio}</p>
                   )}
                   <div className="text-sm text-gray-500">
-                    Member since {new Date(profile.createdAt).toLocaleDateString()}
+                    Member since {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString() : 'Today'}
                   </div>
                 </>
               )}

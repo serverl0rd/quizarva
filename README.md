@@ -46,15 +46,31 @@ npm install
 
 3. Set up environment variables:
 ```bash
-cp .env.example .env
+cp .env.local.example .env.local
 ```
-Edit `.env` with your actual values.
+Edit `.env.local` with your actual values.
 
 4. Set up the database:
+
+**Option A: Automatic Setup (Recommended)**
 ```bash
-npm run prisma:migrate
-npm run prisma:generate
+npx tsx scripts/setup-database.ts
 ```
+This will check your database connection, run migrations, and prepare your database.
+
+**Option B: Manual Setup**
+```bash
+# Generate Prisma client
+npx prisma generate
+
+# Run migrations
+npx prisma migrate dev
+
+# (Optional) Open Prisma Studio to view your database
+npx prisma studio
+```
+
+**Note**: The profile page will work even without a database connection, showing data from your Google account until the database is set up.
 
 5. Run the development server:
 ```bash

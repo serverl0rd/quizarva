@@ -9,13 +9,23 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    // Try to connect to database
+    try {
+      await prisma.$connect()
+    } catch (dbError) {
+      console.error('Database connection failed:', dbError)
+      // Return empty game history when DB is unavailable
+      return NextResponse.json([])
+    }
+
     const user = await prisma.user.findUnique({
       where: { email: session.user.email },
       select: { id: true }
     })
 
     if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+      // Return empty array instead of error for new users
+      return NextResponse.json([])
     }
 
     const gameHistory = await prisma.gameHistory.findMany({
@@ -27,9 +37,7 @@ export async function GET() {
     return NextResponse.json(gameHistory)
   } catch (error) {
     console.error('Game history fetch error:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch game history' },
-      { status: 500 }
-    )
+    // Return empty array instead of error
+    return NextResponse.json([])
   }
 }

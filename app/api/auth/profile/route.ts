@@ -9,6 +9,36 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    // Try to connect to database
+    try {
+      await prisma.$connect()
+    } catch (dbError) {
+      console.error('Database connection failed:', dbError)
+      // Log additional info in production
+      if (process.env.NODE_ENV === 'production') {
+        console.error('Environment check:', {
+          hasDatabaseUrl: !!process.env.DATABASE_URL,
+          hasPostgresUrl: !!process.env.POSTGRES_URL,
+          hasPrismaUrl: !!process.env.POSTGRES_PRISMA_URL,
+          nodeEnv: process.env.NODE_ENV
+        })
+      }
+      // Return a default profile structure when DB is unavailable
+      return NextResponse.json({
+        id: 'temp-' + session.user.id,
+        email: session.user.email,
+        name: session.user.name,
+        username: null,
+        profilePhoto: session.user.image || null,
+        bio: null,
+        createdAt: new Date().toISOString(),
+        _count: {
+          hostedGames: 0,
+          playerGames: 0
+        }
+      })
+    }
+
     let user = await prisma.user.findUnique({
       where: { email: session.user.email },
       select: {
