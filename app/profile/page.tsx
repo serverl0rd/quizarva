@@ -77,6 +77,9 @@ export default function ProfilePage() {
           bio: data.bio || '',
           profilePhoto: data.profilePhoto || ''
         })
+      } else {
+        const error = await response.json()
+        console.error('Profile fetch failed:', error)
       }
     } catch (error) {
       console.error('Error fetching profile:', error)

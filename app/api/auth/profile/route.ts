@@ -9,7 +9,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const user = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: { email: session.user.email },
       select: {
         id: true,
@@ -28,11 +28,42 @@ export async function GET() {
       },
     })
 
+    // If user doesn't exist, create it
+    if (!user) {
+      const newUser = await prisma.user.create({
+        data: {
+          email: session.user.email,
+          name: session.user.name || session.user.email.split('@')[0],
+          googleId: session.user.id || '',
+        },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          username: true,
+          profilePhoto: true,
+          bio: true,
+          createdAt: true,
+          _count: {
+            select: {
+              hostedGames: true,
+              playerGames: true
+            }
+          }
+        },
+      })
+      user = newUser
+    }
+
     return NextResponse.json(user)
   } catch (error) {
     console.error('Profile fetch error:', error)
+    // Return more detailed error in development
+    const errorMessage = process.env.NODE_ENV === 'development' 
+      ? `Failed to fetch profile: ${error instanceof Error ? error.message : 'Unknown error'}`
+      : 'Failed to fetch profile'
     return NextResponse.json(
-      { error: 'Failed to fetch profile' },
+      { error: errorMessage },
       { status: 500 }
     )
   }
