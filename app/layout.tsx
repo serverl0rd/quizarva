@@ -35,9 +35,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-bg-light dark:bg-bg-dark text-text-primary-light dark:text-text-primary-dark`}>
-        <Providers>{children}</Providers>
-        <Footer />
+      <body className={`${inter.className} bg-bg-light dark:bg-bg-dark text-text-primary-light dark:text-text-primary-dark min-h-screen flex flex-col`}>
+        <Providers>
+          <div className="flex-1 flex flex-col">
+            {children}
+          </div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )

@@ -35,9 +35,9 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
       {session && <Header />}
-      <main className="flex-1 flex flex-col">{children}</main>
+      {children}
       <ProfileSetupModal
         isOpen={showProfileSetup}
         onComplete={() => {
@@ -45,6 +45,6 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
           window.location.reload()
         }}
       />
-    </div>
+    </>
   )
 }
