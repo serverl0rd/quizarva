@@ -225,7 +225,7 @@ export default function ProfilePage() {
                       {saving ? 'Saving...' : 'Save Changes'}
                     </Button>
                     <Button 
-                      variant="outline" 
+                      variant="secondary" 
                       onClick={() => {
                         setIsEditing(false)
                         setEditForm({
