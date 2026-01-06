@@ -31,13 +31,13 @@ export const authConfig: NextAuthConfig = {
               googleId: account.providerAccountId,
             },
           })
-          return true
         } catch (error) {
-          console.error('Error creating user:', error)
-          return false
+          console.error('Error creating/updating user in database:', error)
+          // Don't block sign in if database operation fails
+          // User can still sign in, profile will be created later
         }
       }
-      return true
+      return true // Always allow sign in
     },
     async session({ session, token }) {
       if (session?.user) {
