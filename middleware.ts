@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   
   // Define public routes
-  const publicRoutes = ['/login', '/terms', '/privacy']
+  const publicRoutes = ['/', '/login', '/terms', '/privacy']
   const isPublicRoute = publicRoutes.some(route => pathname === route || pathname.startsWith(route + '/'))
   
   // Allow public routes without auth check

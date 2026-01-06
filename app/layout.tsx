@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
+import { Footer } from '@/components/ui/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,8 +35,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-bg-light dark:bg-bg-dark text-text-primary-light dark:text-text-primary-dark`}>
-        <Providers>{children}</Providers>
+      <body className={`${inter.className} bg-bg-light dark:bg-bg-dark text-text-primary-light dark:text-text-primary-dark min-h-screen flex flex-col`}>
+        <Providers>
+          <div className="flex-1">
+            {children}
+          </div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )
