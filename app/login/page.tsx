@@ -1,9 +1,13 @@
 'use client'
 
 import { signIn } from 'next-auth/react'
+import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 import Image from 'next/image'
 
-export default function LoginPage() {
+function LoginContent() {
+  const searchParams = useSearchParams()
+  const error = searchParams.get('error')
   return (
     <div className="flex-1 flex items-center justify-center bg-bg-light dark:bg-bg-dark py-12">
       <div className="max-w-md w-full space-y-8">
@@ -16,6 +20,15 @@ export default function LoginPage() {
             Join exciting multiplayer quiz games
           </p>
         </div>
+        
+        {error && (
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-md text-sm">
+            {error === 'AccessDenied' && 'Access was denied. Please try again.'}
+            {error === 'Configuration' && 'There is a problem with the server configuration.'}
+            {error === 'Verification' && 'The verification token has expired or has already been used.'}
+            {error === 'Default' && 'An error occurred during sign in.'}
+          </div>
+        )}
         
         <div className="mt-8 space-y-6">
           <button
@@ -49,5 +62,17 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex-1 flex items-center justify-center bg-bg-light dark:bg-bg-dark py-12">
+        <div className="animate-pulse text-2xl">Loading...</div>
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
   )
 }
