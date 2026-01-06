@@ -19,9 +19,12 @@ export function Header() {
         <nav className="flex items-center space-x-4">
           {session && (
             <>
-              <span className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
+              <Link 
+                href="/profile" 
+                className="text-sm text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark transition-colors"
+              >
                 {session.user?.name || session.user?.email}
-              </span>
+              </Link>
               <Button
                 variant="ghost"
                 size="sm"

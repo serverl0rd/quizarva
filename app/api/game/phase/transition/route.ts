@@ -205,5 +205,9 @@ async function handleGameEnd(gameId: string) {
     // Notify game end
     const { notifyGameEnd } = await import('@/lib/sse/broadcast')
     await notifyGameEnd(gameId, players[0].id)
+    
+    // Record game history
+    const { recordGameHistory } = await import('@/lib/game/record-history')
+    await recordGameHistory(gameId)
   }
 }

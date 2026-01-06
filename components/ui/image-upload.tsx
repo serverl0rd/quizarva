@@ -11,6 +11,9 @@ interface ImageUploadProps {
   onRemove?: () => void
   placeholder?: string
   className?: string
+  variant?: 'square' | 'circle'
+  onUpload?: (url: string) => void
+  currentImage?: string
 }
 
 export function ImageUpload({
@@ -19,6 +22,9 @@ export function ImageUpload({
   onRemove,
   placeholder = 'Upload an image',
   className = '',
+  variant = 'square',
+  onUpload,
+  currentImage,
 }: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -47,6 +53,7 @@ export function ImageUpload({
 
       const data = await response.json()
       onChange(data.url)
+      onUpload?.(data.url)
     } catch (err) {
       console.error('Upload error:', err)
       setError(err instanceof Error ? err.message : 'Failed to upload image')
@@ -64,30 +71,59 @@ export function ImageUpload({
     setError(null)
   }
 
-  if (value) {
+  const displayValue = value || currentImage
+  
+  if (displayValue) {
     return (
       <div className={`relative group ${className}`}>
-        <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-border bg-surface">
+        <div className={`relative ${variant === 'circle' ? 'aspect-square rounded-full' : 'aspect-video rounded-lg'} w-full overflow-hidden border border-border bg-surface`}>
           <Image
-            src={value}
+            src={displayValue}
             alt="Uploaded image"
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
           />
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-            <Button
-              type="button"
-              variant="danger"
-              size="sm"
-              onClick={handleRemove}
-              className="flex items-center gap-2"
-            >
-              <X className="h-4 w-4" />
-              Remove
-            </Button>
+            <div className="flex gap-2">
+              <label htmlFor="image-upload">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    fileInputRef.current?.click()
+                  }}
+                  className="flex items-center gap-2"
+                >
+                  <Upload className="h-4 w-4" />
+                  Change
+                </Button>
+              </label>
+              {onRemove && (
+                <Button
+                  type="button"
+                  variant="danger"
+                  size="sm"
+                  onClick={handleRemove}
+                  className="flex items-center gap-2"
+                >
+                  <X className="h-4 w-4" />
+                  Remove
+                </Button>
+              )}
+            </div>
           </div>
         </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleUpload}
+          className="hidden"
+          disabled={isUploading}
+        />
       </div>
     )
   }
@@ -105,7 +141,7 @@ export function ImageUpload({
       />
       <label htmlFor="image-upload">
         <div className="cursor-pointer">
-          <div className="flex items-center justify-center w-full aspect-video rounded-lg border-2 border-dashed border-border hover:border-primary-light dark:hover:border-primary-dark bg-surface hover:bg-surface-alt dark:hover:bg-surface-alt-dark transition-colors">
+          <div className={`flex items-center justify-center w-full ${variant === 'circle' ? 'aspect-square rounded-full' : 'aspect-video rounded-lg'} border-2 border-dashed border-border hover:border-primary-light dark:hover:border-primary-dark bg-surface hover:bg-surface-alt dark:hover:bg-surface-alt-dark transition-colors`}>
             <div className="text-center p-6">
               {isUploading ? (
                 <>
@@ -116,9 +152,11 @@ export function ImageUpload({
                 <>
                   <ImageIcon className="mx-auto h-8 w-8 text-text-secondary" />
                   <p className="mt-2 text-sm font-medium">{placeholder}</p>
-                  <p className="mt-1 text-xs text-text-secondary">
-                    Click to upload • Max 5MB
-                  </p>
+                  {variant !== 'circle' && (
+                    <p className="mt-1 text-xs text-text-secondary">
+                      Click to upload • Max 5MB
+                    </p>
+                  )}
                 </>
               )}
             </div>

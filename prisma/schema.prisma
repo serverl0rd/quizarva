@@ -13,6 +13,8 @@ model User {
   email         String         @unique
   name          String?
   username      String?        @unique
+  profilePhoto  String?
+  bio           String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   
@@ -20,6 +22,7 @@ model User {
   playerGames   Player[]
   templates     GameTemplate[]
   auditLogs     AuditLog[]     @relation("UserAuditLogs")
+  gameHistory   GameHistory[]
 }
 
 model Game {
@@ -38,6 +41,7 @@ model Game {
   startedAt        DateTime?
   completedAt      DateTime?
   winnerId         String?
+  name             String?
   
   boards           Board[]
   players          Player[]
@@ -151,6 +155,31 @@ model GameTemplate {
   usageCount    Int      @default(0)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model GameHistory {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  gameId          String
+  gameName        String?
+  role            String   // "host" or "player"
+  board1Score     Int      @default(0)
+  board2Score     Int      @default(0)
+  totalScore      Int      @default(0)
+  position        Int      // 1st, 2nd, 3rd place
+  totalPlayers    Int
+  questionsAnswered Int    @default(0)
+  correctAnswers  Int      @default(0)
+  incorrectAnswers Int     @default(0)
+  buzzesWon       Int      @default(0)
+  buzzesLost      Int      @default(0)
+  playedAt        DateTime
+  duration        Int?     // in minutes
+  isWinner        Boolean  @default(false)
+  
+  @@index([userId])
+  @@index([gameId])
 }
 
 enum GameStatus {
