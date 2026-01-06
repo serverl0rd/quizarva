@@ -23,10 +23,8 @@ export default function HomePage() {
   }
 
   return (
-    <>
-      <Header />
-      <div className="min-h-screen bg-bg-light dark:bg-bg-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="flex-1 flex items-center justify-center bg-bg-light dark:bg-bg-dark">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <h1 className="text-5xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">QuizArva</h1>
             <p className="text-xl text-text-secondary-light dark:text-text-secondary-dark mb-12">
@@ -53,6 +51,5 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-    </>
   )
 }

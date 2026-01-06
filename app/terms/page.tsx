@@ -1,6 +1,6 @@
 export default function TermsOfService() {
   return (
-    <div className="min-h-screen bg-white dark:bg-black py-12 px-4">
+    <div className="flex-1 bg-white dark:bg-black py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-8">Terms of Service</h1>
         

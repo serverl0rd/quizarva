@@ -37,7 +37,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   return (
     <>
       {session && <Header />}
-      <main className="min-h-[calc(100vh-4rem)]">{children}</main>
+      <main className="flex-1 flex flex-col">{children}</main>
       <ProfileSetupModal
         isOpen={showProfileSetup}
         onComplete={() => {

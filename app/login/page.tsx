@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg-light dark:bg-bg-dark">
+    <div className="flex-1 flex items-center justify-center bg-bg-light dark:bg-bg-dark py-12">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-text-primary-light dark:text-text-primary-dark">QuizArva</h1>

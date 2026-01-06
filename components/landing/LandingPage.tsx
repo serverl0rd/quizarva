@@ -41,7 +41,7 @@ export function LandingPage() {
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="flex-1 flex flex-col">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-32">
         <div className="container mx-auto px-4">

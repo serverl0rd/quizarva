@@ -48,7 +48,7 @@ export default function PlayerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-bg-light dark:bg-bg-dark flex items-center justify-center px-4">
+    <div className="flex-1 bg-bg-light dark:bg-bg-dark flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">Join a Game</h1>

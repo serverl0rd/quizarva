@@ -127,7 +127,7 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
+      <div className="flex-1 bg-white dark:bg-black flex items-center justify-center">
         <div className="text-gray-600 dark:text-gray-400">Loading profile...</div>
       </div>
     )
@@ -135,7 +135,7 @@ export default function ProfilePage() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
+      <div className="flex-1 bg-white dark:bg-black flex items-center justify-center">
         <div className="text-gray-600 dark:text-gray-400">Profile not found</div>
       </div>
     )
@@ -155,7 +155,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black py-12 px-4">
+    <div className="flex-1 bg-white dark:bg-black py-12 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Profile Header */}
         <Card className="p-8 mb-8">
