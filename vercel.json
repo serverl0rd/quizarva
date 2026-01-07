@@ -3,6 +3,15 @@
   "framework": "nextjs",
   "regions": ["iad1"],
   "env": {
-    "PRISMA_HIDE_UPDATE_MESSAGE": "true"
+    "PRISMA_HIDE_UPDATE_MESSAGE": "true",
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "app/api/auth/profile/route.ts": {
+      "maxDuration": 10
+    },
+    "app/api/game/*/route.ts": {
+      "maxDuration": 10
+    }
   }
 }

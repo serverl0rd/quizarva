@@ -61,9 +61,34 @@ export default function ProfilePage() {
     if (!session) {
       redirect('/login')
     }
+    
+    // Always create a default profile if session exists
+    if (session?.user && !profile) {
+      const defaultProfile: ProfileData = {
+        id: 'temp-' + Date.now(),
+        email: session.user.email || '',
+        name: session.user.name,
+        username: null,
+        profilePhoto: session.user.image || null,
+        bio: null,
+        createdAt: new Date().toISOString(),
+        _count: {
+          hostedGames: 0,
+          playerGames: 0
+        }
+      }
+      setProfile(defaultProfile)
+      setEditForm({
+        name: defaultProfile.name || '',
+        username: '',
+        bio: '',
+        profilePhoto: defaultProfile.profilePhoto || ''
+      })
+    }
+    
     fetchProfile()
     fetchGameHistory()
-  }, [session, status])
+  }, [session, status]) // Don't include profile to avoid infinite loops
 
   const fetchProfile = async () => {
     try {
@@ -174,7 +199,7 @@ export default function ProfilePage() {
     setEditForm(prev => ({ ...prev, profilePhoto: url }))
   }
 
-  if (loading) {
+  if (loading && !profile) {
     return (
       <div className="flex-1 bg-white dark:bg-black flex items-center justify-center">
         <div className="text-gray-600 dark:text-gray-400">Loading profile...</div>

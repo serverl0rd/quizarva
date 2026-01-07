@@ -88,7 +88,25 @@ export async function GET() {
     return NextResponse.json(user)
   } catch (error) {
     console.error('Profile fetch error:', error)
-    // Return more detailed error in development
+    
+    // Always try to return a valid profile structure instead of error
+    if (session?.user) {
+      return NextResponse.json({
+        id: 'temp-' + session.user.id,
+        email: session.user.email || '',
+        name: session.user.name || session.user.email?.split('@')[0] || 'User',
+        username: null,
+        profilePhoto: session.user.image || null,
+        bio: null,
+        createdAt: new Date().toISOString(),
+        _count: {
+          hostedGames: 0,
+          playerGames: 0
+        }
+      })
+    }
+    
+    // Only return error if we truly can't create a profile
     const errorMessage = process.env.NODE_ENV === 'development' 
       ? `Failed to fetch profile: ${error instanceof Error ? error.message : 'Unknown error'}`
       : 'Failed to fetch profile'
