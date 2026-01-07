@@ -67,7 +67,7 @@ export default function ProfilePage() {
       const defaultProfile: ProfileData = {
         id: 'temp-' + Date.now(),
         email: session.user.email || '',
-        name: session.user.name,
+        name: session.user.name || null,
         username: null,
         profilePhoto: session.user.image || null,
         bio: null,
@@ -110,7 +110,7 @@ export default function ProfilePage() {
           const defaultProfile: ProfileData = {
             id: 'temp-' + Date.now(),
             email: session.user.email || '',
-            name: session.user.name,
+            name: session.user.name || null,
             username: null,
             profilePhoto: session.user.image || null,
             bio: null,
@@ -136,7 +136,7 @@ export default function ProfilePage() {
         const defaultProfile: ProfileData = {
           id: 'temp-' + Date.now(),
           email: session.user.email || '',
-          name: session.user.name,
+          name: session.user.name || null,
           username: null,
           profilePhoto: session.user.image || null,
           bio: null,

@@ -3,8 +3,10 @@ import { prisma } from '@/lib/db/prisma'
 import { NextResponse, NextRequest } from 'next/server'
 
 export async function GET() {
+  let session: any
+  
   try {
-    const session = await auth()
+    session = await auth()
     if (!session?.user?.email) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
