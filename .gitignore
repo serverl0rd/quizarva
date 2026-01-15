@@ -130,3 +130,24 @@ backups/
 *.dump
 *.sql.backup
 .env*.local
+
+# Screenshots and debug images
+*.png
+!public/*.png
+test-*.png
+Bug.png
+
+# Test and validation scripts
+test-*.js
+validate-*.js
+
+# Export and debug files
+Export*.txt
+*error*.txt
+*limit*.txt
+pre-logout.txt
+transcript.md
+
+# Quiz import files (generated test data)
+*-import.json
+buzzing-quiz-import.json
